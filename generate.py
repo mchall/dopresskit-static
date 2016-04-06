@@ -1,9 +1,9 @@
 import re
 import os.path
 import sys
-import urlparse
 import xml.sax.handler
 
+from urllib.parse import urlparse
 from jinja2 import Template, Environment, FileSystemLoader
 
 
@@ -30,13 +30,13 @@ def xml2obj(src):
             return 1
 
         def __getitem__(self, key):
-            if isinstance(key, basestring):
+            if isinstance(key, str):
                 return self._attrs.get(key, None)
             else:
                 return [self][key]
 
         def __contains__(self, name):
-            return self._attrs.has_key(name)
+            return name in self._attrs
 
         def __nonzero__(self):
             return bool(self._attrs or self.data)
@@ -99,31 +99,31 @@ def xml2obj(src):
             self.text_parts.append(content)
 
     builder = TreeBuilder()
-    if isinstance(src, basestring):
-        xml.sax.parseString(src, builder)
+    if isinstance(src, str):
+        xml.sax.parseString(bytes(src,'utf-8'), builder)
     else:
         xml.sax.parse(src, builder)
-    return builder.root._attrs.values()[0]
+    return list(builder.root._attrs.values())[0]
 
 
 # FUNCTIONS THAT JUST TALK
 def blabla_ga():
     if ga is None:
-        print ">>> Google analytics ID : Not found, skipping..."
-        print "        Use 'python generate.py <Tracking ID> " + \
-              "to activate google analytics"
+        print(">>> Google analytics ID : Not found, skipping...")
+        print("        Use 'python generate.py <Tracking ID> " + \
+              "to activate google analytics")
     else:
-        print "Google analytics : Enabled (ID: %s)" % (ga)
+        print ("Google analytics : Enabled (ID: %s)") % (ga)
 
 
 def blabla_projects():
     projects = get_projects()
     if len(projects) == 0:
-        print ">>> No project found, skipping..."
-        print "        Duplicate the '_template' folder, rename it " + \
-              "and edit data.xml"
-        print "        The project folder name must be lowercase " + \
-              "and spaces by _underscores_."
+        print (">>> No project found, skipping...")
+        print ("        Duplicate the '_template' folder, rename it " + \
+              "and edit data.xml")
+        print ("        The project folder name must be lowercase " + \
+              "and spaces by _underscores_.")
 
 
 ###############################################################
@@ -193,9 +193,9 @@ def clean_url(url):
     return url.rstrip('/')
 
 def get_site(url):
-    parsed_url = urlparse.urlparse(url)
+    parsed_url = urlparse(url)
     if parsed_url.netloc == '' and parsed_url.scheme == '':
-        parsed_url = urlparse.urlparse("//" + url)
+        parsed_url = urlparse("//" + url)
     site = parsed_url.netloc
     if site.startswith("www."):
         site = site[4:]
@@ -242,7 +242,7 @@ def do_compile(project_name, company_datas=None):
     with open(path, "wb") as fh:
         fh.write(output.encode('utf-8'))
 
-    print ">>> generated : " + path
+    print (">>> generated : " + path)
     return xml_obj
 
 
