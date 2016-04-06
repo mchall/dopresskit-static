@@ -5,8 +5,6 @@ dopresskit-static is a static version of the great [Rami Ismail's presskit()](ht
 
 If you don't wan't to rely on PHP you can use it with the same xml files & directory structure as the original presskit().
 
-You can even **host it on dropbox** : [demo](https://dl.dropboxusercontent.com/u/8211966/presskit-static/index.html)
-
 # Features
 * Not PHP
 * More comprehensible source (thanks to python being python & the simple jinja syntax)
@@ -20,12 +18,12 @@ You can even **host it on dropbox** : [demo](https://dl.dropboxusercontent.com/u
 Go read the original [https://github.com/ramiismail/dopresskit](https://github.com/ramiismail/dopresskit) to see what presskit() is all about.
 
 ## Python environment
-It requires python 2.7 (2.6 probably works as well) and the jinja2 package.
+It requires python 3 and the jinja2 package.
 
 If you're on OSX/Linux you might already have a proper environment.
 
-* Download python [https://www.python.org/download/releases/2.7.7/](https://www.python.org/download/releases/2.7.7/)
-* Install the template engine **jinja2** with `easy_install jinja2` or `pip install jinja2` or even via the windows binary at [http://www.lfd.uci.edu/~gohlke/pythonlibs/#jinja2](http://www.lfd.uci.edu/~gohlke/pythonlibs/#jinja2) (`Jinja2‑2.7.3.win32‑py2.7.exe`)
+* Download python [https://www.python.org/download/releases/3.4.4/](https://www.python.org/downloads/release/python-344/)
+* Install the template engine **jinja2** with `easy_install jinja2` or `pip install jinja2`
 
 ## Generate your static files
 You should be able to compile a project as is with the default `data.xml`.
